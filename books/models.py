@@ -15,3 +15,6 @@ class Book(models.Model):
         decimal_places=2,
         verbose_name="Daily fee (USD)"
     )
+
+    def __str__(self):
+        return f"{self.title} - {self.author}"
