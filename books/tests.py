@@ -109,3 +109,11 @@ class BookTests(TestCase):
     def test_books_detail_url_resolves(self):
         resolver = resolve(self.book_detail_url)
         self.assertEqual(resolver.view_name, "books:books-detail")
+
+    def test_books_list_url_returns_200(self):
+        response = self.client.get(self.books_url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_books_detail_url_returns_200(self):
+        response = self.client.get(self.book_detail_url)
+        self.assertEqual(response.status_code, 200)
