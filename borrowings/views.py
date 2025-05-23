@@ -1,5 +1,6 @@
 from django.db.models import F
-from django.template.context_processors import request
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
@@ -16,6 +17,27 @@ class BorrowingsViewSet(viewsets.ModelViewSet):
         if self.action == "retrieve":
             return BorrowingRetrieveSerializer
         return BorrowingSerializer
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name="user_id",
+                description="Filter borrowings by user ID (admin only)",
+                required=False,
+                type=OpenApiTypes.INT,
+                location=OpenApiParameter.QUERY
+            ),
+            OpenApiParameter(
+                name="is_active",
+                description="Filter by borrowing activity: true = not returned, false = returned",
+                required=False,
+                type=OpenApiTypes.BOOL,
+                location=OpenApiParameter.QUERY
+            ),
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = Borrowing.objects.select_related("book_id", "user_id")
