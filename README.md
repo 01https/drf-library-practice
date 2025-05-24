@@ -1,4 +1,6 @@
-# Airport Management
+# DRF Library Practice
+
+## This is a practice that is not a pet project.
 
 ## Description
 A web-based application for managing flights, airplanes, routes, crew assignments,
